@@ -18,7 +18,7 @@ class Detail {
       this.moves,
       this.sprites});
 
-  factory Detail.fromJson(Map<String, dynamic> json) {
+  factory Detail.detafromJson(Map<String, dynamic> json) {
     List<String> _types = (json['types'] as List)
         .map((data) => data['type']['name'].toString())
         .toList();

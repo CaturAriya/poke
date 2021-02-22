@@ -9,7 +9,7 @@ class Ability extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black38,
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.red,

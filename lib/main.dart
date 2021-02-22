@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/Ability.dart';
+import 'package:pokemon/src.dart';
 import 'package:pokemon/Detail.dart';
 import 'package:pokemon/PokeLink.dart';
 import 'Detail.dart';
@@ -21,20 +22,21 @@ class _HomePageState extends State<HomePage> {
   List<Detail> get pokemon => pokelist;
   int num = 0;
   bool isSearching = false;
+  String keys;
   getPokeData() async {
     if (pokelist == null) {
       // ignore: deprecated_member_use
       pokelist = new List<Detail>();
     }
     if (num < 152) {
-      for (var n = 0; n < 152; n++) {
+      for (var n = 0; n < 5; n++) {
         num++;
         print('pulling data from pokemon index number ${num.toString()}');
 
         var pull = await Pokepull.fetchpokemon(num.toString());
         if (pull != null) {
           setState(() {
-            pokelist.add(Detail.fromJson(pull));
+            pokelist.add(Detail.detafromJson(pull));
           });
         }
       }
@@ -52,38 +54,48 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
         appBar: AppBar(
           title: !isSearching
               ? Text("Pokeapp")
               : TextField(
-                  decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      hintText: "search your pokemon here",
-                      hintStyle: TextStyle(color: Colors.grey))),
+              onSubmitted: (value) {
+                setState(() {
+                  keys = value;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Find(src: keys)));
+                });
+              },
+              decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  hintText: "Enter full name",
+                  hintStyle: TextStyle(color: Colors.grey))),
           actions: <Widget>[
             isSearching
                 ? IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      setState(() {
-                        this.isSearching = !this.isSearching;
-                      });
-                    })
+                icon: Icon(Icons.cancel),
+                onPressed: () {
+                  setState(() {
+                    this.isSearching = !this.isSearching;
+                  });
+                })
                 : IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      setState(() {
-                        this.isSearching = !this.isSearching;
-                      });
-                    },
-                  )
+              icon: Icon(Icons.search),
+              onPressed: () {
+                setState(() {
+                  this.isSearching = !this.isSearching;
+                });
+              },
+            )
           ],
           backgroundColor: Colors.red,
         ),
-        body: Container(
+      body: Container(
             child: pokelist.length > 0
                 ? GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -98,20 +110,13 @@ class _HomePageState extends State<HomePage> {
                     ) {
                       return Card(
                         elevation: 10.0,
+                        color: Colors.grey,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         margin: EdgeInsets.fromLTRB(15.0, 12.0, 15.0, 12.0),
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Column(children: [
-                            Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  "#${pokelist[index].num} ${pokelist[index].name}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 11),
-                                )),
                             InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -130,6 +135,14 @@ class _HomePageState extends State<HomePage> {
                                         image: NetworkImage(
                                             pokelist[index].sprites)),
                                   ),
+                                )),
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "#${pokelist[index].num} ${pokelist[index].name}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 11),
                                 ))
                           ]),
                         ),
