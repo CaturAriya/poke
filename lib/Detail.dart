@@ -11,12 +11,12 @@ class Detail {
 
   Detail(
       {this.num,
-        this.name,
-        this.types,
-        this.height,
-        this.weight,
-        this.moves,
-        this.sprites});
+      this.name,
+      this.types,
+      this.height,
+      this.weight,
+      this.moves,
+      this.sprites});
 
   factory Detail.fromJson(Map<String, dynamic> json) {
     List<String> _types = (json['types'] as List)
