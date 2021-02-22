@@ -7,7 +7,7 @@ import 'Detail.dart';
 import 'package:flutter/cupertino.dart.';
 
 void main() => runApp(MaterialApp(
-      title: "PokeApp",
+      title: "P@kedex",
       home: HomePage(),
       debugShowCheckedModeBanner: false,
     ));
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black,
         appBar: AppBar(
           title: !isSearching
-              ? Text("Pokeapp")
+              ? Text("P@kedex")
               : TextField(
               onSubmitted: (value) {
                 setState(() {
