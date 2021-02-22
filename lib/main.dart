@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       pokelist = new List<Detail>();
     }
     if (num < 152) {
-      for (var n = 0; n < 5; n++) {
+      for (var n = 0; n < 151; n++) {
         num++;
         print('pulling data from pokemon index number ${num.toString()}');
 
